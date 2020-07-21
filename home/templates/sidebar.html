@@ -4,9 +4,13 @@
 		<!-- container -->
 		<div class="container">
 			<div id="responsive-nav">
+                {% if page %}
 				<!-- category nav -->
 				<div class="category-nav">
-					<span class="category-header">Categories <i class="fa fa-list"></i></span>
+				{% else %}
+                    <div class="category-nav show-on-click">
+                {% endif %}
+                    <span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
 						<li class="dropdown side-dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
@@ -204,8 +208,8 @@
 				<div class="menu-nav">
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Shop</a></li>
+						<li><a href="/">Home</a></li>
+						<li><a href="about.html">About Us</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
