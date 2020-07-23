@@ -2,14 +2,15 @@ from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 from django.utils.safestring import mark_safe
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
-
-class Category(models.Model):
+class Category(MPTTModel):
     STATUS = (
         ('True', 'Mavjud'),
         ('False', 'Mavjud Emas'),
     )
-    parent = models.ForeignKey('self',
+    parent = TreeForeignKey('self',
                                blank=True,
                                null=True,
                                related_name='children',
@@ -25,6 +26,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+    class MPTTMeta:
+        order_insertion_by = ['title']
 
 class Product(models.Model):
     STATUS = (
