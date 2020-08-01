@@ -1,14 +1,25 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
+
+from product.models import Category, Product
 from .models import Setting, ContactForm, ContactMessage
 
 
 # Create your views here.
 def index(request):
     setting = Setting.objects.get(pk=1)
+    category = Category.objects.all()
+    products_slider = Product.objects.all().order_by('id')[:4]
+    products_latest = Product.objects.all().order_by('-id')[:8]
+    products_picked = Product.objects.all().order_by('?')[:8]
     page = "home"
-    context ={'setting': setting, 'page': page }
+    context ={'setting': setting,
+              'page': page,
+              'category': category,
+              'products_slider': products_slider,
+              'products_latest':products_latest,
+              'products_picked':products_picked,}
     return render(request, 'index.html', context)
 
 
