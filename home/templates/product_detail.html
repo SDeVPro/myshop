@@ -1,0 +1,58 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %}{{ product.title }} {% endblock %}
+{% block keywords %}{{ product.keywords }}{% endblock %}
+{% block description %}{{ product.description }}{% endblock %}
+
+{% block sidebar %}{% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/category/{{ product.category.id }}/{{ product.category.slug }}">{{ product.category.title }}</a></li>
+                <li><a href="#"> {{ product.title }}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="product product-details clearfix">
+                    <div class="col-md-6">
+                        <div id="product-main-view">
+                            <div class="product-view">
+                                <img src="{{ product.image.url }}" alt="" style="height: 300px">
+                            </div>
+                            {% for rs in images %}
+                                <div class="product-view">
+                                    <img src="{{ rs.image.url }}" alt="" style="height: 300px">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    <div id="product-view">
+                        <div class="product-view">
+                            <img src="{{ product.image.url }}" alt="" >
+                        </div>
+                        {% for rs in images %}
+                            <div class="product-view">
+                                    <img src="{{ rs.image.url }}" alt="" style="height: 75px">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="product-body">
+                        <h2 class="product-name">{{ product.title }}</h2>
+                        <h2 class="product-name">{{ product.price }} so'm</h2>
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %} {% include 'footer.html' %}{% endblock %}

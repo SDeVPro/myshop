@@ -1,8 +1,10 @@
+import json
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, HttpResponse
 
-from product.models import Category, Product
+from product.models import Category, Product, Images
 from .forms import SearchForm
 from .models import Setting, ContactForm, ContactMessage
 
@@ -80,3 +82,31 @@ def search(request):
             }
             return render(request, 'search.html', context)
     return HttpResponseRedirect('/')
+
+
+def search_auto(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        products = Product.objects.filter(title__icontains=q)
+        results = []
+        for rs in products:
+            products_json = {}
+            products_json = rs.title
+            results.append(products_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+
+def product_detail(request, id, slug):
+    category = Category.objects.all()
+    product = Product.objects.get(pk=id)
+    images = Images.objects.filter(product_id=id)
+    context = {
+        'category': category,
+        'product': product,
+        'images': images,
+    }
+    return render(request, 'product_detail.html', context)
