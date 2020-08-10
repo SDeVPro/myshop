@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, HttpResponse
 
-from product.models import Category, Product, Images
+from product.models import Category, Product, Images, Comment
 from .forms import SearchForm
 from .models import Setting, ContactForm, ContactMessage
 
@@ -54,11 +54,11 @@ def aboutus(request):
 
 def category_products(request, id, slug):
     category = Category.objects.all()
-    catdata = Category.objects.get(pk=1)
+    #catdata = Category.objects.get(pk=1)
     products = Product.objects.filter(category_id=id)
     context = {
         'category': category,
-        'catdata': catdata,
+        #'catdata': catdata,
         'products': products,
     }
     return render(request, 'category_products.html', context)
@@ -104,9 +104,11 @@ def product_detail(request, id, slug):
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
     images = Images.objects.filter(product_id=id)
+    comments = Comment.objects.filter(product_id=id, status='True')
     context = {
         'category': category,
         'product': product,
         'images': images,
+        'comments': comments,
     }
     return render(request, 'product_detail.html', context)
