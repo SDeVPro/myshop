@@ -22,6 +22,8 @@ from home import views
 urlpatterns = [
     path('product/', include('product.urls')),
     path('', include('home.urls')),
+    path('order/', include('order.urls')),
+
     path('home/', include('home.urls')),
     path('search/', views.search, name='search'),
     path('search_auto/', views.search_auto, name='search_auto'),
