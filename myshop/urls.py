@@ -20,11 +20,15 @@ from django.urls import path, include
 
 from home import views
 from order import views as OrderViews
+from user import views as UserViews
 urlpatterns = [
     path('product/', include('product.urls')),
     path('', include('home.urls')),
     path('order/', include('order.urls')),
     path('user/', include('user.urls')),
+    path('login/', UserViews.login_form, name='login_form'),
+    path('logout/', UserViews.logout_func, name='logout_func'),
+    path('signup/', UserViews.signup_form, name='signup_form'),
     path('shopcart/', OrderViews.shopcart, name='shopcart'),
 
     path('home/', include('home.urls')),
