@@ -7,6 +7,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ['name', 'subject', 'email', 'message', 'create_at']
     readonly_fields = ('name', 'subject', 'email', 'message', 'ip')
     list_filter = ['status']
+#14.08.2020
 
 admin.site.register(Setting, SettingAdmin)
 admin.site.register(ContactMessage, ContactMessageAdmin)

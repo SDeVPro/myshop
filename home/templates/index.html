@@ -1,10 +1,10 @@
-{% extends 'homebase.html' %}
+{% extends 'homebase.html'%}
 {% load static %}
-{% block title %}My Home Page{% endblock %}
-{% block keywords %}My Home Keywords{% endblock %}
-{% block description %}My Home Description{% endblock %}
+{% block title %} {{ setting.title }}{% endblock %}
+{% block description %}  {{ setting.description }}{% endblock %}
+{% block keywords %}  {{ setting.keywords }}{% endblock %}
 
 {% block sidebar %}{% include 'sidebar.html' %} {% endblock %}
 {% block slider %}{% include 'slider.html' %} {% endblock %}
-{% block body %} {% include 'content.html' %}{% endblock %}
-{% block footer %} {% include 'footer.html' %}{% endblock %}
+{% block body %}{% include 'content.html' %} {% endblock %}
+{% block foot %}{% include 'footer.html' %} {% endblock %}

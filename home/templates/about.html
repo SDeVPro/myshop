@@ -1,27 +1,36 @@
-{% extends 'homebase.html' %}
+{% extends 'homebase.html'%}
 {% load static %}
-{% block title %}About Us -{{ setting.title }} {% endblock %}
-{% block keywords %}{{ setting.keywords }}{% endblock %}
-{% block description %}{{ setting.description }}{% endblock %}
+{% block title %} About Us - {{ setting.title }}{% endblock %}
+{% block description %}  {{ setting.description }}{% endblock %}
+{% block keywords %}  {{ setting.keywords }}{% endblock %}
 
 {% block sidebar %}{% include 'sidebar.html' %} {% endblock %}
 
 {% block body %}
-    <div id="breadcrumb">
-        <div class="container">
-            <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
-                <li class="active">About Us</li>
-            </ul>
-        </div>
-    </div>
+    	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li class="active">About Us</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                {{ setting.aboutus|safe }}
-            </div>
-        </div>
-    </div>
-{% endblock %}
-{% block footer %} {% include 'footer.html' %}{% endblock %}
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+                {{ setting.aboutus |safe }}
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+ {% endblock %}
+{% block foot %}{% include 'footer.html' %} {% endblock %}
