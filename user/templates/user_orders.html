@@ -37,7 +37,7 @@
 									<tr>
 
 										<th class="text-center">ID:</th>
-                                        <th class="text-center">Firs Name:</th>
+                                        <th class="text-center">First Name:</th>
                                         <th class="text-center">Last Name:</th>
                                         <th class="text-center">Total:</th>
                                         <th class="text-center">Status:</th>
@@ -67,23 +67,7 @@
                                 {% endfor %}
 
 								</tbody>
-								<tfoot>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">{{ total }}</th>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>Total Quantity Products</th>
-										<td colspan="2">{{ total_quantity }}</td>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>TOTAL</th>
-										<th colspan="2" class="total">{{total}}</th>
-									</tr>
-								</tfoot>
+
 							</table>
 							<div class="pull-right">
 								<a href="/order/orderproduct" class="primary-btn">Place Order</a>

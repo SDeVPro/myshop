@@ -118,7 +118,7 @@ def user_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'user_password.html', {'form': form, 'category': category})
 
-
+@login_required(login_url='/login')
 def user_orders(request):
     category = Category.objects.all()
     current_user = request.user
@@ -149,7 +149,6 @@ def user_orders_product(request):
     order_product = OrderProduct.objects.filter(user_id=current_user.id)
     context = { 'category': category,
                 'order_product': order_product,
-
     }
     return render(request, 'user_order_product.html', context)
 
