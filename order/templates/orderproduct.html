@@ -72,36 +72,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="shiping-methods">
-                        <div class="section-title">
-                            <h4 class="title">Payment Information</h4>
-                        </div>
-                        <p><label for="id_first_name"> Total:</label>
-                            <input type="text" name="total" class="input" readonly value="{{ total }} so'm">
 
-                        </p>
-                        <p><label for="id_credit_card"> Credit Card Holder:</label>
-                            <input type="text" name="credit_card" class="input" readonly value=" ">
-
-                        </p>
-                        <p><label for="id_credit_card_number">Credit Card number:</label>
-                            <input type="text" name="credit_card_number" class="input" readonly value="">
-
-                        </p>
-                        <p><label for="id_credit_card_exp_date"> Credit Card Exp Date:</label>
-                            <input type="text" name="credit_card_exp_date" class="input" readonly value=" ">
-
-                        </p>
-                        <p><label for="id_credit_card_security_number"> Credit Card Security Number:</label>
-                            <input type="text" name="total" class="input" readonly value=" ">
-
-                        </p>
-
-
-
-                    </div>
-                </div>
             </form>
                     <div class="col-md-12">
 						<div class="order-summary clearfix">
@@ -134,19 +105,12 @@
 
 								</tbody>
 								<tfoot>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">{{ total }}</th>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>Quantity Products</th>
-										<td colspan="2"> {{ total_quantity }}</td>
-									</tr>
+
+
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>TOTAL</th>
+                                        <th colspan="2" class="total_quantity">Sizda {{ total_quantity }} ta mahsulot</th>
 										<th colspan="2" class="total">{{total}}</th>
 									</tr>
 								</tfoot>
@@ -165,4 +129,4 @@
 
 
  {% endblock %}
-{% block foot %}{% include 'footer.html' %} {% endblock %}
+{% block footer %}{% include 'footer.html' %} {% endblock %}

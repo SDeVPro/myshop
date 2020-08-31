@@ -24,7 +24,7 @@ def addcomment(request, id):
             current_user = request.user
             data.user_id = current_user.id
             data.save()
-            messages.success(request, "Sizning kommentariyangiz yuborildi, qiziqishingiz uchun rahmat!")
+            messages.success(request, "Sizning commentariyangiz qabul qilindi!")
             return HttpResponseRedirect(url)
 
     return HttpResponseRedirect(url)

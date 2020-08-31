@@ -1,8 +1,7 @@
 import json
 
-
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, HttpResponse
 
 from product.models import Category, Product, Images, Comment
@@ -15,15 +14,16 @@ def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     products_slider = Product.objects.all().order_by('id')[:4]
-    products_latest = Product.objects.all().order_by('-id')[:8]
-    products_picked = Product.objects.all().order_by('?')[:8]
+    products_latest = Product.objects.all().order_by('-id')[:4]
+    products_picked = Product.objects.all().order_by('?')[:4]
     page = "home"
     context ={'setting': setting,
               'page': page,
-              'category': category,
-              'products_slider': products_slider,
-              'products_latest':products_latest,
-              'products_picked':products_picked,}
+              'category':category,
+              'products_slider':products_slider,
+              'products_latest': products_latest,
+              'products_picked':products_picked,
+              }
     return render(request, 'index.html', context)
 
 
@@ -54,18 +54,17 @@ def aboutus(request):
 
 def category_products(request, id, slug):
     category = Category.objects.all()
-    catdata = Category.objects.get(pk=id)
+    #catdata = Category.objects.get(pk=1)
     products = Product.objects.filter(category_id=id)
     context = {
-               'category': category,
-               'products': products,
-               'catdata':catdata,
-              }
+        'category': category,
+        #'catdata': catdata,
+        'products': products,
+    }
     return render(request, 'category_products.html', context)
 
-
 def search(request):
-    if request.method == 'POST':
+    if request.method=='POST':
         form = SearchForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data['query']
@@ -76,9 +75,11 @@ def search(request):
                 products = Product.objects.filter(title__icontains=query, category_id=catid)
 
             category = Category.objects.all()
-            context = {'products': products,
-                       'query': query,
-                       'category': category}
+            context = {
+                'products': products,
+                'query': query,
+                'category': category,
+            }
             return render(request, 'search.html', context)
     return HttpResponseRedirect('/')
 
@@ -105,8 +106,8 @@ def product_detail(request, id, slug):
     images = Images.objects.filter(product_id=id)
     comments = Comment.objects.filter(product_id=id, status='True')
     context = {
-        'product': product,
         'category': category,
+        'product': product,
         'images': images,
         'comments': comments,
     }
