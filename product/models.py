@@ -47,6 +47,12 @@ class Product(models.Model):
         ('True', 'Mavjud'),
         ('False', 'Mavjud Emas'),
     )
+    VARIANTS = (
+        ('None', 'None'),
+        ('Size','Size'),
+        ('Color', 'Color'),
+        ('Size-Color', 'Size-Color'),
+    )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, unique=True)
     keywords = models.CharField(max_length=255, unique=True)
@@ -56,6 +62,7 @@ class Product(models.Model):
     amount = models.IntegerField()
     minamount = models.IntegerField()
     detail = RichTextUploadingField()
+    variant = models.CharField(max_length=15, choices=VARIANTS, default='None')
     status = models.CharField(max_length=15, choices=STATUS)
     slug = models.SlugField(null=False, unique=True)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -70,7 +77,7 @@ class Product(models.Model):
     image_tag.short_description = 'Image'
 
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'self': self.slug})
+        return reverse('cat=egory_detail', kwargs={'self': self.slug})
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -101,4 +108,46 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject', 'comment', 'rate']
+
+class Color(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=15, blank=True, null=True)
+    def __str__(self):
+        return self.name
+    def color_tag(self):
+        if self.code is not None:
+            return mark_safe('<p style="background-color:{}">Color</p>'.format(self.code))
+        else:
+            return ""
+
+class Size(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=15, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Variants(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, blank=True, null=True)
+    image_id = models.IntegerField(blank=True, null=True, default=0)
+    quantity = models.IntegerField(default=1)
+    price = models.FloatField(default=0)
+    def __str__(self):
+        return self.title
+    def image(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+            varimage = img.image.url
+        else:
+            varimage = ""
+        return varimage
+    def image_tag(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+            return mark_safe('<img src="{}" height="50"/>'.format(img.image.url))
+        else:
+            return ""
 

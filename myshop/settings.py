@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'myshop.urls'
@@ -109,7 +110,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
+LANGUAGES = [
+    ('en', ('English')),
+    ('uz', ('Uzbek')),
+]
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale')),
+#pip install gettext
+#mlocati.github.io/articles/gettext-iconv-windows.html
+#django-admin makemessages -l uz -a
+#django-admin compilemessages
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'

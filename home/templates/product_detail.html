@@ -1,5 +1,6 @@
 {% extends 'homebase.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}{{ product.title }} {% endblock %}
 {% block keywords %}{{ product.keywords }}{% endblock %}
 {% block description %}{{ product.description }}{% endblock %}
@@ -9,8 +10,8 @@
 {% block body %}
     <div id="breadcrumb">
         <div class="container">
-            <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
+            <ul    class="breadcrumb">
+                <li><a href="/">{% trans "Home"%}</a></li>
                 <li><a href="/category/{{ product.category.id }}/{{ product.category.slug }}">{{ product.category.title }}</a></li>
                 <li><a href="#"> {{ product.title }}</a></li>
             </ul>
@@ -50,9 +51,70 @@
                         <p>{{ product.description }}</p>
                         <a href="{{ comments }}"></a>
                     </div>
+                    <p>
+                        <strong>Brand:</strong>E-SHop
+                    </p>
+                       <p>{{ product.description }}</p>
+                    <script>
+                        $(document).on('change', '#post-form', function (e){
+                            e.preventDefault();
+                            $.ajax({
+                                type:'POST',
+                                url:'{% url "ajaxcolor" %}',
+                                data:{
+                                    productid:$('#productid').val(),
+                                    size:$('#size').val(),
+                                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                    action:'post'
+                                },
+                                data_type:'html',
+                                success: function (data){
+                                    console.log("success");
+                                    $('#appendHere').html(data.rendered_table);
+
+                                },
+                                error: function (data){
+                                    alert("Got an error dude"+data);
+                                }
+                            });
+                        });
+                    </script>
+                    {{ variant }}
                     <div class="product-btns">
-                        <form action="/order/addtoshopcart/{{ product.id }}" method="post">
+                        <div class="row">
+                            {% if product.variant == 'Size-Color' %}
+                            <div class="product-options">
+                                <div class="size-option">
+                        <form  method="post" id="post-form">
+                            <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                            <span class="text-uppercase">Size: </span>
                             {% csrf_token %}
+                            <select name="size" id="size">
+                                {% for rs in sizes %}
+                                    <option {% if variant.size_id==rs.size_id %} selected{% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                                    <form method="post" action="?q=selectvariant" id="post-color">
+                                        {% csrf_token %}
+                                        <div id="appendHere">
+                                            <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                                            <ul class="color-option">
+                                                <li><span class="text-uppercase">Color:</span></li>
+                                                {% for rs in colors %}
+
+                                                    <input type="radio" {% if variant.id == rs.id %} checked{% endif %} name="variantid" id="variantid" value="{{ rs.id }}"onchange="this.form.submit();">
+                                                <li {% if variant.id == rs.id %} class="active" {% endif %}>
+                                                    <a style="height: 15px">
+                                                    ${{ rs.price }}{{ rs.color }}
+                                                    </a>
+                                                    <img src="{{ rs.image }}" style="height: 200px" alt="">
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </form>
+
                             <div class="qty-input">
                                 <input class="input" name="quantity" type="number" value="1" min="1" max="{{ product.amount }}">
                             </div>
@@ -143,6 +205,7 @@
                                     {% endif %}
                                 </form>
                             </div>
+                                {% endif %}
                                 </div>
                             </div>
 

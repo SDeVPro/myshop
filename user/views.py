@@ -6,6 +6,7 @@ from django.shortcuts import render, HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
 # Create your views here.
+from order.models import Order
 from product.models import Category
 from user.forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from user.models import UserProfile
